@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pookyApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function ($scope, $http, uiGmapGoogleMapApi) {
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -19,4 +19,11 @@ angular.module('pookyApp')
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
+    
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+      console.log($scope.map);
+
+    uiGmapGoogleMapApi.then(function(maps) {
+
+    });
   });
