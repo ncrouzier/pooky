@@ -1,12 +1,47 @@
 'use strict';
 
 angular.module('pookyApp')
-  .controller('MainCtrl', function ($scope, $http, uiGmapGoogleMapApi) {
-    $scope.awesomeThings = [];
+  .controller('MainCtrl', function ($scope, $http,locationService) {
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-    });
+    // $scope.$on('mapInitialized', function(event, map) {
+
+    // });
+
+    // $scope.$watch('locationData', function() {
+    //     var location = JSON.parse($scope.locationData);
+    //     $scope.location = {
+    //         lng : location.longitude,
+    //         lat : location.latitude
+        // initialize();
+    // });
+
+    // function initialize() {
+    //     var mapOptions = {
+    //         panControl    : true,
+    //         zoomControl   : true,
+    //         scaleControl  : true,
+    //         mapTypeControl: true,
+    //         mapTypeId     : google.maps.MapTypeId.ROADMAP
+    //     };
+
+    //     $scope.map = {
+    //         center: {
+    //             latitude: 41,
+    //             longitude: 87
+    //         },
+    //         zoom: 8,
+    //         options: mapOptions,
+    //     };
+    // }
+
+
+
+    // $scope.awesomeThings = [];
+    // $http.get('/api/things').success(function(awesomeThings) {
+    //   $scope.awesomeThings = awesomeThings;
+    // });
+
+    locationService.getLocations();
 
     $scope.addThing = function() {
       if($scope.newThing === '') {
@@ -19,11 +54,6 @@ angular.module('pookyApp')
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
-    
-    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
-      console.log($scope.map);
 
-    uiGmapGoogleMapApi.then(function(maps) {
-
-    });
+   
   });
