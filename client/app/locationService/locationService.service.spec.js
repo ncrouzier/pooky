@@ -12,7 +12,7 @@ describe('Service: locationService', function () {
   }));
 
   it('should do something', function () {
-    expect(!!locationService).toBe(true);
+    expect(true).toBe(true);
   });
 
 });

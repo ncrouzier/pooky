@@ -8,11 +8,12 @@ angular.module('pookyApp').service('locationService',['Restangular', function (R
 	this.getLocations = function(params) {
         return Location.getList().then(
             function(locations) {
-            	console.log(locations)
+                console.log(params);
+            	console.log(locations);
                 return locations;
             },
             function(locations) {
-                console.log('Error: ' + res.status);
+                console.log('Error: ' + locations.status);
             });
     };
 
