@@ -1,15 +1,14 @@
 'use strict';
 
-angular.module('pookyApp').service('locationService',['Restangular', function (Restangular) {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+angular.module('pookyApp').factory('locationService', ['Restangular', function(Restangular) {
+
+    var factory = {};
     var Location = Restangular.all('locations');
 
 
-	this.getLocations = function(params) {
+    factory.getLocations = function() {
         return Location.getList().then(
             function(locations) {
-                console.log(params);
-            	console.log(locations);
                 return locations;
             },
             function(locations) {
@@ -17,4 +16,20 @@ angular.module('pookyApp').service('locationService',['Restangular', function (R
             });
     };
 
-  }]);
+    factory.saveLocation = function(loc) {
+        return Location.post(loc).then(
+            function() {
+
+            },
+            function(res) {
+                console.log('Error: ' + res.status);
+            });
+    };
+
+    factory.updateLocation = function(loc) {
+        loc.save();
+    };
+
+    return factory;
+
+}]);

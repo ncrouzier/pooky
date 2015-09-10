@@ -7,7 +7,8 @@ var app = angular.module('pookyApp', [
     'ui.router',
     'ui.bootstrap',
     'ngMap',
-    'restangular'
+    'restangular',
+    'xeditable'
 ]);
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
@@ -17,7 +18,11 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
 
 });
-app.run(['$http', 'Restangular', function($http, Restangular) {
+app.run(['$http', 'Restangular','editableOptions', function($http, Restangular,editableOptions) {
     Restangular.setBaseUrl('/api/');
+    Restangular.setRestangularFields({
+        id: '_id'
+    });
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 
 }]);

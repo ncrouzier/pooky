@@ -5,7 +5,9 @@ var Location = require('./location.model');
 
 // Get list of locations
 exports.index = function(req, res) {
-  Location.find(function (err, locations) {
+  var query = Location.find();
+  query = query.sort("date");
+  query.exec(function (err, locations) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(locations);
   });

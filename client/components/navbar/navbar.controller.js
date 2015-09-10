@@ -9,6 +9,10 @@ angular.module('pookyApp')
     {
       'title': 'Stats',
       'link': '/stats'
+    },
+    {
+      'title': 'Location Manager',
+      'link': '/locationmanager'
     }];
 
     $scope.isCollapsed = true;

@@ -10,5 +10,11 @@
   "undef": true,
   "smarttabs": true,
   "asi": true,
-  "debug": true
+  "debug": true,
+  "globals": {
+    "$": false,
+    "jQuery": false,
+    "LatLon":true
+  }
+  
 }
