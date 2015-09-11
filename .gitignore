@@ -7,3 +7,7 @@ client/assets/images/locations
 dist
 /server/config/local.env.js
 npm-debug.log
+client/assets/images/.DS_Store
+client/assets/.DS_Store
+client/.DS_Store
+.DS_Store
