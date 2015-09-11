@@ -1,19 +1,25 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <!-- <div class="fill"> -->
 <div map-lazy-load="http://maps.google.com/maps/api/js">
-    <map center="41,-87" zoom="8"  map-type-id="MapTypeId.SATELLITE" street-view-control="false" zoom-control-options="{style:'SMALL'}" pan-control="false">
-        
+    <map center="41,-87" zoom="8" map-type-id="MapTypeId.SATELLITE" street-view-control="false" zoom-control-options="{style:'SMALL'}" pan-control="false">
         <custom-control id="home" position="TOP_LEFT" index="1">
             <div style="background-color: white;">
                 <b>Total distance: {{distanceTraveled}} km</b>
             </div>
         </custom-control>
+        <marker id="{{loc._id}}_mark" ng-repeat="loc in locationData" position="{{loc.lat}}, {{loc.lng}}" icon="assets/images/pookymarker.png"></marker>
 
-        <marker ng-repeat="loc in locationData" position="{{loc.lat}}, {{loc.lng}}" icon="assets/images/pookymarker.gif"></marker>
-
+        <info-window  ng-repeat="loc in locationData" visible-on-marker="{{loc._id}}_mark">
+            <div ng-non-bindable="">
+                <div id="siteNotice"></div>
+                <h1 id="firstHeading" class="firstHeading">Uluru</h1>
+                <div id="bodyContent">
+                    blabllalb
+                </div>
+            </div>
+        </info-window>
         <shape name="polyline" id="foo" path="{{pathData}}" geodesic="true" stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2">
-    </shape>
-
+        </shape>
     </map>
 </div>
 <!-- </div> -->

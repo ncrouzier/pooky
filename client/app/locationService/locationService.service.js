@@ -6,8 +6,8 @@ angular.module('pookyApp').factory('locationService', ['Restangular', function(R
     var Location = Restangular.all('locations');
 
 
-    factory.getLocations = function() {
-        return Location.getList().then(
+    factory.getLocations = function(params) {
+        return Location.getList(params).then(
             function(locations) {
                 return locations;
             },
