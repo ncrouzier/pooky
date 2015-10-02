@@ -12,8 +12,6 @@
   "asi": true,
   "debug": true,
   "globals": {
-    "$": false,
-    "jQuery": false,
     "LatLon":true
   }
   

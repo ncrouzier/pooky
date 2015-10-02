@@ -6,10 +6,38 @@ var Location = require('./location.model');
 // Get list of locations
 exports.index = function(req, res) {
     var limit = req.query.limit;
+    var filter = req.query.filter;
+    var sort = req.query.sort;
     var query = Location.find();
-    query = query.sort("date");
+    
+    if (filter){
+        filter = JSON.parse(filter);
+        if (filter.all){
+
+          query = query.and([
+          {
+              "location": new RegExp(filter.all, 'i')
+          },
+          {
+              "date": new RegExp(filter.all, 'i')
+          },
+          {
+              "country": new RegExp(filter.all, 'i')
+          }
+          ]);
+            
+        }
+    }
+
+    if (sort){
+      query = query.sort(sort);
+    }else{
+      query = query.sort("date");
+    }
+
+    
+
     if (limit) {
-        console.log(limit);
         query = query.limit(limit);
     }
 
