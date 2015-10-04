@@ -14,13 +14,11 @@ exports.index = function(req, res) {
         filter = JSON.parse(filter);
         if (filter.all){
 
-          query = query.and([
+          query = query.or([
           {
               "location": new RegExp(filter.all, 'i')
-          },
-          {
-              "date": new RegExp(filter.all, 'i')
-          },
+          }
+          ,
           {
               "country": new RegExp(filter.all, 'i')
           }

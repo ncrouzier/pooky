@@ -1,11 +1,17 @@
 'use strict';
 /* globals LatLon */
-angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', 'locationService', function($scope, $http, locationService) {
+angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http','$compile', 'locationService', function($scope, $http,$compile, locationService) {
 
+    $scope.infoWindows = [];
     $scope.pathData = [];
     $scope.distanceTraveled = 0;
     locationService.getLocations().then(function(locs) {
         $scope.locationData = locs;
+        var loc = $scope.locationData[$scope.locationData.length - 1];
+        $scope.currentlocation = $scope.getLocation(loc)
+        $scope.currentzoom = $scope.getZoom(loc)
+
+
         var oldPoint, newPoint;
         locs.map(function(item) {
             $scope.pathData.push([item.lat, item.lng]);
@@ -17,7 +23,7 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', 'locationS
             oldPoint = newPoint;
 
         });
-        $scope.distanceTraveled = addSeparatorsNF(($scope.distanceTraveled / 1000).toFixed(2) , '.', '.', ' ');
+        $scope.distanceTraveled = addSeparatorsNF(($scope.distanceTraveled / 1000).toFixed(2), '.', '.', ' ');
     });
 
 
@@ -35,6 +41,78 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', 'locationS
         }
         return nStr + nStrEnd;
     }
+
+
+
+    $scope.toggleTraceLine = function() {
+        if ($scope.map.shapes.traceline.getMap() === null) {
+            $scope.map.shapes.traceline.setMap($scope.map);
+        } else {
+            $scope.map.shapes.traceline.setMap(null);
+        }
+    };
+
+    $scope.getZoom = function(loc) {
+        return loc.zoomLvl;
+    };
+
+    $scope.getLocation = function(loc) {
+        return loc.lat + ',' + loc.lng;
+    };
+
+    $scope.getLatLng = function(loc) {
+        return new google.maps.LatLng(loc.lat, loc.lng);
+    };
+
+    $scope.locationZoom = function(zoom) {
+        console.log(zoom);
+        $scope.map.setZoom(zoom);
+    };
+
+    $scope.showInfoWindowFromLink = function(loc) {
+        var infowindow = createInfoWindow(loc);
+
+        closeAllInfoWindows();
+        infowindow.open($scope.map);
+        $scope.map.panTo($scope.getLatLng(loc));
+
+    };
+
+    $scope.showInfoWindowFromMarker = function() {
+        var loc = this.location;
+        var infowindow = createInfoWindow(loc);
+
+        closeAllInfoWindows();
+        infowindow.open($scope.map);
+        $scope.map.panTo($scope.getLatLng(loc));
+    };
+
+    function closeAllInfoWindows() {
+        for (var i = 0; i < $scope.infoWindows.length; i++) {
+            $scope.infoWindows[i].close();
+        }
+    }
+
+
+    function createInfoWindow(loc) {
+        var onload = function() {
+            $scope.$apply(function() {
+                $compile(document.getElementById("infowindow_" + loc._id))($scope)
+            });
+        }
+        var infowindow = new google.maps.InfoWindow({
+            content: '<div id="infowindow_'+loc._id+'">'+ loc.location + '<br> <img src="assets/images/locations/TN_' + loc.imgPath + '"><br><a ng-click="locationZoom(' + loc.zoomLvl + ')">zoom</a></div>',
+            position: $scope.getLatLng(loc),
+            pixelOffset: new google.maps.Size(0, -25)
+        });
+        google.maps.event.addListener(infowindow, 'domready', function(a, b, c, d) {
+            onload();
+        });
+        $scope.infoWindows.push(infowindow);
+        return infowindow;
+    }
+
+
 
 
     // function initialize() {

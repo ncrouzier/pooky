@@ -14,7 +14,7 @@
     "font-awesome": ">=4.1.0",
     "json3": "~3.3.1",
     "lodash": "~2.4.1",
-    "ngmap": "~1.13.4",
+    "ngmap": "~1.13.11",
     "restangular": "~1.5.1"
   },
   "devDependencies": {

@@ -1,50 +1,67 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="well col-md-12">
-	<input type="text" ng-model="item" placeholder="Look for a location / date / country" ng-change="filterLocation(item)" ng-model-options="{ debounce: 1000 }" class="form-control">
+<div class="well row">
+    <div class="col-md-10">
+	   <input type="text" ng-model="item" placeholder="Look for a location / country" ng-change="filterLocation(item)" ng-model-options="{ debounce: 500 }" class="form-control">
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group" dropdown is-open="status.isopen">
+      <button id="single-button" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disabled">
+        {{limit}} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+        <li role="menuitem"><a ng-click="selectlimit(10)">10</a></li>
+        <li role="menuitem"><a ng-click="selectlimit(20)">20</a></li>
+        <li role="menuitem"><a ng-click="selectlimit(50)">50</a></li>
+        <li role="menuitem"><a ng-click="selectlimit(All)">All</a></li>
+      </ul>
+    </div>
+    </div>
 </div>
 
-<div ng-repeat="loc in locationData" class="well col-md-12">
-    <div class="col-md-6">
-        <form editable-form name="editableForm" onaftersave="updateLocation(loc)" class="form-horizontal">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Location: </label></div><div class="col-sm-10"><span editable-text="loc.location">{{ loc.location || 'empty' }}</span></div></div>
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Latitude: </label></div><div class="col-sm-10"><span editable-text="loc.lat">{{ loc.lat || 'empty' }}</span></div></div>
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Longitude: </label></div><div class="col-sm-10"><span editable-text="loc.lng">{{ loc.lng || 'empty' }}</span></div></div>
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Zoom level: </label></div><div class="col-sm-10"><span editable-number="loc.zoomLvl">{{ loc.zoomLvl || 'empty' }}</span></div></div>
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Description: </label></div><div class="col-sm-10"><span editable-textarea="loc.description">{{ loc.description || 'empty' }}</span></div></div>
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Image Path: </label></div><div class="col-sm-10"><span editable-text="loc.imgPath">{{ loc.imgPath || 'empty' }}</span></div></div>
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Image height: </label></div><div class="col-sm-10"><span editable-number="loc.imgHeight">{{ loc.imgHeight || 'empty' }}</span></div></div>
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Image width: </label></div><div class="col-sm-10"><span editable-number="loc.imgWidth">{{ loc.imgWidth || 'empty' }}</span></div></div>
-                <div class="row">
-                    <div class="col-sm-2"><label class="bold">Country: </label></div><div class="col-sm-10"><span editable-text="loc.country">{{ loc.country || 'empty' }}</span></div></div>
-                <div>
-                    <!-- button to show form -->
-                    <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
-                        Edit
-                    </button>
-                    <!-- buttons to submit / cancel form -->
-                    <span ng-show="editableForm.$visible">
-		        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
-		          Save
-		        </button>
-		        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
-		          Cancel
-		        </button>
-		      </span>
+<div class="row">
+    <div ng-repeat="loc in locationData" class="well col-md-12">
+        <div class="col-md-6">
+            <form editable-form name="editableForm" onaftersave="updateLocation(loc)" class="form-horizontal">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Location: </label></div><div class="col-sm-10"><span editable-text="loc.location">{{ loc.location || 'empty' }}</span></div></div>
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Latitude: </label></div><div class="col-sm-10"><span editable-text="loc.lat">{{ loc.lat || 'empty' }}</span></div></div>
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Longitude: </label></div><div class="col-sm-10"><span editable-text="loc.lng">{{ loc.lng || 'empty' }}</span></div></div>
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Zoom level: </label></div><div class="col-sm-10"><span editable-number="loc.zoomLvl">{{ loc.zoomLvl || 'empty' }}</span></div></div>
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Description: </label></div><div class="col-sm-10"><span editable-textarea="loc.description">{{ loc.description || 'empty' }}</span></div></div>
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Image Path: </label></div><div class="col-sm-10"><span editable-text="loc.imgPath">{{ loc.imgPath || 'empty' }}</span></div></div>
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Image height: </label></div><div class="col-sm-10"><span editable-number="loc.imgHeight">{{ loc.imgHeight || 'empty' }}</span></div></div>
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Image width: </label></div><div class="col-sm-10"><span editable-number="loc.imgWidth">{{ loc.imgWidth || 'empty' }}</span></div></div>
+                    <div class="row">
+                        <div class="col-sm-2"><label class="bold">Country: </label></div><div class="col-sm-10"><span editable-text="loc.country">{{ loc.country || 'empty' }}</span></div></div>
+                    <div>
+                        <!-- button to show form -->
+                        <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+                            Edit
+                        </button>
+                        <!-- buttons to submit / cancel form -->
+                        <span ng-show="editableForm.$visible">
+    		        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+    		          Save
+    		        </button>
+    		        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+    		          Cancel
+    		        </button>
+    		      </span>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <img src="assets/images/locations/TN_{{loc.imgPath}}">
+            </form>
+        </div>
+        <div class="col-md-6">
+            <img src="assets/images/locations/TN_{{loc.imgPath}}">
+        </div>
     </div>
 </div>

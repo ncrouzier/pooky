@@ -2,8 +2,15 @@
 
 angular.module('pookyApp').controller('LocationmanagerCtrl', ['$scope', '$http', 'locationService', function($scope, $http, locationService) {
 
+	$scope.limit=10;
+
+	$scope.selectlimit = function(limit){
+		$scope.limit=limit;
+		$scope.filterLocation($scope.item)
+	}
+
     locationService.getLocations({
-        limit: 10,
+        limit: $scope.limit,
         sort: '-date'
     }).then(function(locs) {
         $scope.locationData = locs;
@@ -15,11 +22,11 @@ angular.module('pookyApp').controller('LocationmanagerCtrl', ['$scope', '$http',
 
     };
 
-// Filter locations by location, date and country regex
+// Filter locations by location  and country regex
     $scope.filterLocation = function(val) {
 	    locationService.getLocations({
         	sort: '-date',
-        	limit: 10,
+        	limit: $scope.limit,
         	filter: {
         		all: val
         	}
