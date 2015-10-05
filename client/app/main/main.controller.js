@@ -2,6 +2,8 @@
 /* globals LatLon */
 angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile', 'locationService', function($scope, $http, $compile, locationService) {
 
+    $scope.showSearch = true;
+
     $scope.infoWindows = [];
     $scope.pathData = [];
     $scope.distanceTraveled = 0;
@@ -68,13 +70,13 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile'
         $scope.map.setZoom(zoom);
     };
 
-    $scope.showInfoWindowFromLink = function(loc) {
-        var infowindow = createInfoWindow(loc);
-
-        closeAllInfoWindows();
-        infowindow.open($scope.map);
-        $scope.map.panTo($scope.getLatLng(loc));
-
+    $scope.showInfoWindowFromLocation = function(loc) {
+        if (loc !== null) {
+            var infowindow = createInfoWindow(loc);
+            closeAllInfoWindows();
+            infowindow.open($scope.map);
+            $scope.map.panTo($scope.getLatLng(loc));
+        }
     };
 
     $scope.showInfoWindowFromMarker = function() {
@@ -84,6 +86,10 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile'
         closeAllInfoWindows();
         infowindow.open($scope.map);
         $scope.map.panTo($scope.getLatLng(loc));
+    };
+
+    $scope.onLocationSelect = function($item, $model, $label) {
+        $scope.showInfoWindowFromLocation($item);
     };
 
     function closeAllInfoWindows() {

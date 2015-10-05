@@ -1,22 +1,21 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <!-- <div class="fill"> -->
 <div map-lazy-load="http://maps.google.com/maps/api/js">
-    <map center="{{currentlocation}}" zoom="{{currentzoom}}" map-type-id="MapTypeId.SATELLITE" street-view-control="false" zoom-control-options="{style:'SMALL'}" pan-control="false" map-type-control-options="{mapTypeIds: ['ROADMAP','SATELLITE'],position:'TOP_RIGHT'}">
-        <custom-control id="customoverlay" position="TOP_LEFT" index="1">
-            <div style="background-color: white;">
-                <br>
+    <map center="{{currentlocation}}" zoom="{{currentzoom}}" map-type-id="MapTypeId.SATELLITE" street-view-control="false" zoom-control-options="{style:'SMALL'}" pan-control="false" map-type-control-options="{mapTypeIds: ['ROADMAP','SATELLITE','TERRAIN'],position:'TOP_RIGHT'}">
+        <custom-control class="customcontrol" position="TOP_LEFT" index="1">
+            <div id="customcontroldiv">
                 <span ng-repeat="loc in locationData | orderBy:'date':true | limitTo:5">
-                    <a class="pointer" ng-click="showInfoWindowFromLink(loc)">{{loc.location}}</a><br>
+                    <a class="pointer" ng-click="showInfoWindowFromLocation(loc)">{{loc.location}}</a><br>
                 </span>
-                <select ng-model="selectedLocation" name="locationSelect" ng-change="showInfoWindowFromLink(selectedLocation)"  data-ng-options="loc.location for loc in locationData.slice(0,-5) | orderBy:'date':true">
+                <select ng-model="selectedLocation" name="locationSelect" ng-change="showInfoWindowFromLocation(selectedLocation)"  data-ng-options="loc.location for loc in locationData.slice(0,-5) | orderBy:'date':true">
                     <option value="">More destinations</option>
                     <!-- <option ng-repeat="loc in locationData | orderBy:'date':true" ng-if="$index > 4" value="{{loc}}">{{loc.location}}</option> -->
                 </select>
                 <br>
                 <br>
-                <span>Total distance: {{distanceTraveled}} km</span>
+                <span class="bold"><i class="fa fa-plane"></i> Total distance: {{distanceTraveled}} km</span>
                 <br>
-                <a class="pointer" ng-click="toggleTraceLine()">Toggle trace line</a>
+                <a class="pointer" ng-click="toggleTraceLine()"><i ng-show="map.shapes.traceline.getVisible()" class="fa fa-toggle-on"></i><i ng-show="!map.shapes.traceline.getVisible()" class="fa fa-toggle-off"></i> Toggle trace line</a>
             </div>
         </custom-control>
         <marker id="{{loc._id}}_mark" ng-repeat="loc in locationData" location="{{loc}}" position="{{loc.lat}}, {{loc.lng}}" on-click="showInfoWindowFromMarker()" icon="assets/images/pookymarker.png"></marker>

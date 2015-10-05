@@ -14,7 +14,12 @@
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
+        <li ng-show="showSearch">
+          <input type="text" ng-model="loc" typeahead="loc.location for loc in locationData | filter:{location:$viewValue} | limitTo:8" typeahead-editable="false"  typeahead-on-select="onLocationSelect($item, $model, $label)" placeholder="Search location" class="form-control">
+        </li>
       </ul>
     </div>
   </div>
 </div>
+
+
