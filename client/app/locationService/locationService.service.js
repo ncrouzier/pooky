@@ -7,7 +7,7 @@ angular.module('pookyApp').factory('locationService', ['Restangular', function(R
 
 
     factory.getLocations = function(params) {
-        return Location.customGET("",params).then(
+        return Location.getList(params).then(
             function(locations) {
                 return locations;
             },

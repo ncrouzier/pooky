@@ -17,7 +17,7 @@ angular.module('pookyApp').controller('LocationmanagerCtrl', ['$scope', '$http',
     });
 
     $scope.updateLocation = function(loc) {
-
+    	console.log(loc);
         locationService.updateLocation(loc);
 
     };
@@ -34,5 +34,10 @@ angular.module('pookyApp').controller('LocationmanagerCtrl', ['$scope', '$http',
         	$scope.locationData = locs;
     	});
     };
+
+     $scope.dragMarkerEnd = function(event,loc) {
+        loc.lat = this.position.H;
+        loc.lng = this.position.L;
+    }
 
 }]);

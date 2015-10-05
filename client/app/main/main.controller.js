@@ -1,6 +1,6 @@
 'use strict';
 /* globals LatLon */
-angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http','$compile', 'locationService', function($scope, $http,$compile, locationService) {
+angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile', 'locationService', function($scope, $http, $compile, locationService) {
 
     $scope.infoWindows = [];
     $scope.pathData = [];
@@ -8,8 +8,8 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http','$compile',
     locationService.getLocations().then(function(locs) {
         $scope.locationData = locs;
         var loc = $scope.locationData[$scope.locationData.length - 1];
-        $scope.currentlocation = $scope.getLocation(loc)
-        $scope.currentzoom = $scope.getZoom(loc)
+        $scope.currentlocation = $scope.getLocation(loc);
+        $scope.currentzoom = 6; //$scope.getZoom(loc);
 
 
         var oldPoint, newPoint;
@@ -45,10 +45,10 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http','$compile',
 
 
     $scope.toggleTraceLine = function() {
-        if ($scope.map.shapes.traceline.getMap() === null) {
-            $scope.map.shapes.traceline.setMap($scope.map);
+        if ($scope.map.shapes.traceline.getVisible() === false) {
+            $scope.map.shapes.traceline.setVisible(true);
         } else {
-            $scope.map.shapes.traceline.setMap(null);
+            $scope.map.shapes.traceline.setVisible(false);
         }
     };
 
@@ -65,7 +65,6 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http','$compile',
     };
 
     $scope.locationZoom = function(zoom) {
-        console.log(zoom);
         $scope.map.setZoom(zoom);
     };
 
@@ -101,7 +100,7 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http','$compile',
             });
         }
         var infowindow = new google.maps.InfoWindow({
-            content: '<div id="infowindow_'+loc._id+'">'+ loc.location + '<br> <img src="assets/images/locations/TN_' + loc.imgPath + '"><br><a ng-click="locationZoom(' + loc.zoomLvl + ')">zoom</a></div>',
+            content: '<div id="infowindow_' + loc._id + '">' + loc.location + '<br> <img src="assets/images/locations/TN_' + loc.imgPath + '"><br><a ng-click="locationZoom(' + loc.zoomLvl + ')">zoom</a></div>',
             position: $scope.getLatLng(loc),
             pixelOffset: new google.maps.Size(0, -25)
         });
