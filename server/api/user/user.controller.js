@@ -14,6 +14,7 @@ var validationError = function(res, err) {
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
+  console.log('all users');
   User.find({}, '-salt -hashedPassword', function (err, users) {
     if(err) return res.status(500).send(err);
     res.status(200).json(users);

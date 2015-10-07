@@ -2,10 +2,13 @@
 /* globals LatLon */
 angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile', 'locationService', function($scope, $http, $compile, locationService) {
 
+    $scope.currentlocation = [0,0];
+    $scope.currentzoom = 4; 
+    $scope.pathData = [[0, 0]];
+    
     $scope.showSearch = true;
-
     $scope.infoWindows = [];
-    $scope.pathData = [];
+    
     $scope.distanceTraveled = 0;
     locationService.getLocations().then(function(locs) {
         $scope.locationData = locs;
@@ -13,8 +16,8 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile'
         $scope.currentlocation = $scope.getLocation(loc);
         $scope.currentzoom = 6; //$scope.getZoom(loc);
 
-
         var oldPoint, newPoint;
+        $scope.pathData =[];
         locs.map(function(item) {
             $scope.pathData.push([item.lat, item.lng]);
 

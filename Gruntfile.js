@@ -1,4 +1,4 @@
-// Generated on 2015-09-04 using generator-angular-fullstack 2.1.1
+// Generated on 2015-10-07 using generator-angular-fullstack 2.1.1
 'use strict';
 
 module.exports = function (grunt) {
@@ -235,7 +235,7 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/public/{,*/}*.js',
             '<%= yeoman.dist %>/public/{,*/}*.css',
-            // '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/public/assets/fonts/*'
           ]
         }
