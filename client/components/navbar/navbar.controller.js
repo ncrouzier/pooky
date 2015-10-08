@@ -3,16 +3,12 @@
 angular.module('pookyApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
-      'title': 'Home',
+      'title': 'Map',
       'link': '/'
     },
     {
       'title': 'Stats',
       'link': '/stats'
-    },
-    {
-      'title': 'Location Manager',
-      'link': '/locationmanager'
     }
     ];
 

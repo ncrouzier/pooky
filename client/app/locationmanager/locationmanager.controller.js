@@ -17,10 +17,11 @@ angular.module('pookyApp').controller('LocationmanagerCtrl', ['$scope', '$http',
     });
 
     $scope.updateLocation = function(loc) {
-    	console.log(loc);
         locationService.updateLocation(loc);
 
     };
+
+
 
 // Filter locations by location  and country regex
     $scope.filterLocation = function(val) {

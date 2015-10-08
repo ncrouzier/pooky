@@ -7,8 +7,8 @@ angular.module('pookyApp', [
   'ui.router',
   'ui.bootstrap',
   'ngMap',
-    'restangular',
-    'xeditable'
+  'restangular',
+  'xeditable'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
