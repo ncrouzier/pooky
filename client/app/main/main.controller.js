@@ -10,7 +10,9 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile'
     $scope.infoWindows = [];
     
     $scope.distanceTraveled = 0;
-    locationService.getLocations().then(function(locs) {
+    locationService.getLocations({
+            sort: 'date order',
+        }).then(function(locs) {
         $scope.locationData = locs;
         var loc = $scope.locationData[$scope.locationData.length - 1];
         $scope.currentlocation = $scope.getLocation(loc);
@@ -91,7 +93,7 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile'
         $scope.map.panTo($scope.getLatLng(loc));
     };
 
-    $scope.onLocationSelect = function($item, $model, $label) {
+    $scope.onLocationSelect = function($item) {
         $scope.showInfoWindowFromLocation($item);
     };
 
@@ -105,15 +107,15 @@ angular.module('pookyApp').controller('MainCtrl', ['$scope', '$http', '$compile'
     function createInfoWindow(loc) {
         var onload = function() {
             $scope.$apply(function() {
-                $compile(document.getElementById("infowindow_" + loc._id))($scope)
+                $compile(document.getElementById('infowindow_' + loc._id))($scope);
             });
-        }
+        };
         var infowindow = new google.maps.InfoWindow({
             content: '<div id="infowindow_' + loc._id + '">' + loc.location + '<br> <img src="assets/images/locations/TN_' + loc.imgPath + '"><br><a ng-click="locationZoom(' + loc.zoomLvl + ')">zoom</a></div>',
             position: $scope.getLatLng(loc),
             pixelOffset: new google.maps.Size(0, -25)
         });
-        google.maps.event.addListener(infowindow, 'domready', function(a, b, c, d) {
+        google.maps.event.addListener(infowindow, 'domready', function() {
             onload();
         });
         $scope.infoWindows.push(infowindow);

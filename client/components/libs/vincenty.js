@@ -8,7 +8,7 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
 'use strict';
-if (typeof module!='undefined' && module.exports) var LatLon = require('./latlon-ellipsoidal.js'); // CommonJS (Node)
+if (typeof module!=='undefined' && module.exports) {var LatLon = require('./latlon-ellipsoidal.js');} // CommonJS (Node)
 
 
 /**
@@ -28,7 +28,7 @@ if (typeof module!='undefined' && module.exports) var LatLon = require('./latlon
  *   var d = p1.distanceTo(p2); // d: 969954.166
  */
 LatLon.prototype.distanceTo = function(point) {
-    if (!(point instanceof LatLon)) throw new TypeError('point is not LatLon object');
+    if (!(point instanceof LatLon)) {throw new TypeError('point is not LatLon object');}
 
     try {
         return this.inverse(point).distance;
@@ -50,7 +50,7 @@ LatLon.prototype.distanceTo = function(point) {
  *   var b1 = p1.initialBearingTo(p2); // b1.toFixed(4): 9.1419
  */
 LatLon.prototype.initialBearingTo = function(point) {
-    if (!(point instanceof LatLon)) throw new TypeError('point is not LatLon object');
+    if (!(point instanceof LatLon)) {throw new TypeError('point is not LatLon object');}
 
     try {
         return this.inverse(point).initialBearing;
@@ -72,7 +72,7 @@ LatLon.prototype.initialBearingTo = function(point) {
  *   var b2 = p1.finalBearingTo(p2); // b2.toFixed(4): 11.2972
  */
 LatLon.prototype.finalBearingTo = function(point) {
-    if (!(point instanceof LatLon)) throw new TypeError('point is not LatLon object');
+    if (!(point instanceof LatLon)) {throw new TypeError('point is not LatLon object');}
 
     try {
         return this.inverse(point).finalBearing;
@@ -155,7 +155,7 @@ LatLon.prototype.direct = function(distance, initialBearing) {
         σʹ = σ;
         σ = s / (b*A) + Δσ;
     } while (Math.abs(σ-σʹ) > 1e-12 && ++iterations<200);
-    if (iterations>=200) throw new Error('Formula failed to converge'); // not possible?
+    if (iterations>=200) {throw new Error('Formula failed to converge');} // not possible?
 
     var x = sinU1*sinσ - cosU1*cosσ*cosα1;
     var φ2 = Math.atan2(sinU1*cosσ + cosU1*sinσ*cosα1, (1-f)*Math.sqrt(sinα*sinα + x*x));
@@ -202,18 +202,18 @@ LatLon.prototype.inverse = function(point) {
         cosλ = Math.cos(λ);
         sinSqσ = (cosU2*sinλ) * (cosU2*sinλ) + (cosU1*sinU2-sinU1*cosU2*cosλ) * (cosU1*sinU2-sinU1*cosU2*cosλ);
         sinσ = Math.sqrt(sinSqσ);
-        if (sinσ == 0) return 0;  // co-incident points
+        if (sinσ === 0) {return 0;}  // co-incident points
         cosσ = sinU1*sinU2 + cosU1*cosU2*cosλ;
         σ = Math.atan2(sinσ, cosσ);
         sinα = cosU1 * cosU2 * sinλ / sinσ;
         cosSqα = 1 - sinα*sinα;
         cos2σM = cosσ - 2*sinU1*sinU2/cosSqα;
-        if (isNaN(cos2σM)) cos2σM = 0;  // equatorial line: cosSqα=0 (§6)
+        if (isNaN(cos2σM)) {cos2σM = 0;}  // equatorial line: cosSqα=0 (§6)
         C = f/16*cosSqα*(4+f*(4-3*cosSqα));
         λʹ = λ;
         λ = L + (1-C) * f * sinα * (σ + C*sinσ*(cos2σM+C*cosσ*(-1+2*cos2σM*cos2σM)));
     } while (Math.abs(λ-λʹ) > 1e-12 && ++iterations<200);
-    if (iterations>=200) throw new Error('Formula failed to converge');
+    if (iterations>=200) {throw new Error('Formula failed to converge');}
 
     var uSq = cosSqα * (a*a - b*b) / (b*b);
     var A = 1 + uSq/16384*(4096+uSq*(-768+uSq*(320-175*uSq)));
@@ -247,5 +247,5 @@ if (Number.prototype.toDegrees === undefined) {
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-if (typeof module != 'undefined' && module.exports) module.exports = LatLon; // CommonJS (Node)
-if (typeof define == 'function' && define.amd) define([], function() { return LatLon; }); // AMD
+if (typeof module !== 'undefined' && module.exports) {module.exports = LatLon;} // CommonJS (Node)
+if (typeof define === 'function' && define.amd) {define([], function() { return LatLon; });} // AMD

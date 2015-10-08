@@ -14,7 +14,9 @@ var LocationSchema = new Schema({
     imgPath: String,
     imgHeight: Number,
     imgWidth: Number,
-    country: String
+    country: String,
+    createdAt: Date,
+    updatedAt: Date
 });
 
 LocationSchema.pre('save', function(next, done) {

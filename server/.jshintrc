@@ -12,7 +12,8 @@
   "asi": true,
   "debug": true,
   "globals": {
-    "LatLon":true
+    "LatLon":true,
+    "google":true
   }
   
 }

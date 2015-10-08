@@ -8,7 +8,8 @@ angular.module('pookyApp', [
   'ui.bootstrap',
   'ngMap',
   'restangular',
-  'xeditable'
+  'xeditable',
+  'angularFileUpload'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

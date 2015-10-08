@@ -17,8 +17,16 @@
         </div>
     </div>
 </div>
+<button ng-click="locationData.unshift({});">
+    Add new
+</button>
+<div nv-file-drop="" uploader="uploader" >
+    <div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">
+        Drop image to upload
+    </div>
+</div>
 <div class="row" map-lazy-load="http://maps.google.com/maps/api/js">
-    <div ng-repeat="loc in locationData" class="well col-md-12">
+    <div ng-repeat="loc in newLocationData" class="well col-md-12">
         <div class="col-md-6">
             <form editable-form name="editableForm" onaftersave="updateLocation(loc)" class="form-horizontal">
                 <div class="form-group">
@@ -32,7 +40,13 @@
                         <div class="col-sm-2">
                             <label class="bold">Date: </label>
                         </div>
-                        <div class="col-sm-10"><span editable-text="loc.date">{{ loc.date || 'empty' }}</span></div>
+                        <div class="col-sm-10"><span editable-text="loc.date">{{ loc.date | date:'yyyy-MM-dd':'UTC' || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Order: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-number="loc.order" e-min="0">{{ loc.order }}</span></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-2">
@@ -80,7 +94,7 @@
                         <div class="col-sm-2">
                             <label class="bold">Country: </label>
                         </div>
-                        <div class="col-sm-10"><span editable-text="loc.country">{{ loc.country || 'empty' }}</span></div>
+                        <div class="col-sm-10"><span editable-text="loc.country" e-typeahead="country.countryName for country in countryData | filter:$viewValue | limitTo:8">{{ loc.country || 'empty' }}</span></div>
                     </div>
                     <div>
                         <!-- button to show form -->
@@ -89,19 +103,116 @@
                         </button>
                         <!-- buttons to submit / cancel form -->
                         <span ng-show="editableForm.$visible">
-    		        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
-    		          Save
-    		        </button>
-    		        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
-    		          Cancel
-    		        </button>
-    		      </span>
+                    <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                      Cancel
+                    </button>
+                  </span>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-3">
-            <img src="assets/images/locations/TN_{{loc.imgPath}}">
+            <img ng-show="loc.imgPath" src="assets/images/locations/TN_{{loc.imgPath}}">
+        </div>
+        <div class="col-md-3">
+            <map class="managermaps" center="[{{loc.lat}}, {{loc.lng}}]" zoom="{{loc.zoomLvl}}" map-type-id="MapTypeId.ROADMAP" street-view-control="false" zoom-control-options="{style:'SMALL'}" pan-control="false">
+                <marker id="{{loc._id}}_mark" position="[{{loc.lat}}, {{loc.lng}}]" draggable="true" ng-attr-location="{{loc}}" on-dragend="dragMarkerEnd(loc)" icon="assets/images/pookymarker.png"></marker>
+            </map>
+        </div>
+    </div>
+    <div ng-repeat="loc in locationData" class="well col-md-12">
+        <div class="col-md-6">
+            <form editable-form name="editableForm" onaftersave="updateLocation(loc)" class="form-horizontal">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Location: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-text="loc.location">{{ loc.location || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Date: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-text="loc.date">{{ loc.date | date:'yyyy-MM-dd':'UTC' || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Order: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-number="loc.order" e-min="0">{{ loc.order }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Latitude: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-text="loc.lat">{{ loc.lat || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Longitude: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-text="loc.lng">{{ loc.lng || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Zoom level: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-number="loc.zoomLvl">{{ loc.zoomLvl || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Description: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-textarea="loc.description">{{ loc.description || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Image Path: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-text="loc.imgPath">{{ loc.imgPath || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Image height: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-number="loc.imgHeight">{{ loc.imgHeight || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Image width: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-number="loc.imgWidth">{{ loc.imgWidth || 'empty' }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="bold">Country: </label>
+                        </div>
+                        <div class="col-sm-10"><span editable-text="loc.country" e-typeahead="country.countryName for country in countryData | filter:$viewValue | limitTo:8">{{ loc.country || 'empty' }}</span></div>
+                    </div>
+                    <div>
+                        <!-- button to show form -->
+                        <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+                            Edit
+                        </button>
+                        <!-- buttons to submit / cancel form -->
+                        <span ng-show="editableForm.$visible">
+                    <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                      Cancel
+                    </button>
+                  </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <img ng-show="loc.imgPath" src="assets/images/locations/TN_{{loc.imgPath}}">
         </div>
         <div class="col-md-3">
             <map class="managermaps" center="[{{loc.lat}}, {{loc.lng}}]" zoom="{{loc.zoomLvl}}" map-type-id="MapTypeId.ROADMAP" street-view-control="false" zoom-control-options="{style:'SMALL'}" pan-control="false">

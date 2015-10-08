@@ -1,6 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
+
+
 var Location = require('./location.model');
 
 // Get list of locations
@@ -9,31 +11,27 @@ exports.index = function(req, res) {
     var filter = req.query.filter;
     var sort = req.query.sort;
     var query = Location.find();
-    
-    if (filter){
-        filter = JSON.parse(filter);
-        if (filter.all){
 
-          query = query.or([
-          {
-              "location": new RegExp(filter.all, 'i')
-          }
-          ,
-          {
-              "country": new RegExp(filter.all, 'i')
-          }
-          ]);
-            
+    if (filter) {
+        filter = JSON.parse(filter);
+        if (filter.all) {
+
+            query = query.or([{
+                "location": new RegExp(filter.all, 'i')
+            }, {
+                "country": new RegExp(filter.all, 'i')
+            }]);
+
         }
     }
 
-    if (sort){
-      query = query.sort(sort);
-    }else{
-      query = query.sort("date");
+    if (sort) {
+        query = query.sort(sort);
+    } else {
+        query = query.sort("date");
     }
 
-    
+
 
     if (limit) {
         query = query.limit(limit);
@@ -109,6 +107,10 @@ exports.destroy = function(req, res) {
         });
     });
 };
+
+
+
+
 
 function handleError(res, err) {
     return res.status(500).send(err);

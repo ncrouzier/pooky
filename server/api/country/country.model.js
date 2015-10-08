@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var CountrySchema = new Schema({
-  name: String,
-  info: String,
+  countryCode: String,
+  countryName: String,
   active: Boolean
 });
 
