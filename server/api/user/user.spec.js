@@ -5,6 +5,8 @@ var app = require('../../app');
 var request = require('supertest');
 
 
+
+
 describe('GET /api/users', function() {
   it('login', loginUser());
   it('should respond with JSON array', function(done) {
@@ -13,7 +15,7 @@ describe('GET /api/users', function() {
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
-        if (err) return done(err);
+        if (err) return done(res);
         res.body.should.be.instanceof(Array);
         done();
       });
@@ -23,9 +25,10 @@ describe('GET /api/users', function() {
 function loginUser() {
     return function(done) {
         request(app)
-            .post('/local')
-            .send({ username: 'a@a.com', password: 'admin' })
-            .expect(302)
+            .post('/auth/local')
+            .send({email:"a@a.com",password:"admin"})
+            .expect(200)
+            .expect('Content-Type', /json/)
             .end(onResponse);
 
         function onResponse(err, res) {

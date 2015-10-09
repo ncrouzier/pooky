@@ -24,6 +24,7 @@ module.exports = function(config) {
       'client/bower_components/angular-ui-router/release/angular-ui-router.js',
       'client/bower_components/ngmap/build/scripts/ng-map.js',
       'client/bower_components/restangular/dist/restangular.js',
+      'client/bower_components/angular-file-upload/dist/angular-file-upload.min.js',
       'client/app/app.js',
       'client/app/app.coffee',
       'client/app/**/*.js',

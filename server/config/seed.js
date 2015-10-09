@@ -6,6 +6,8 @@
 'use strict';
 
 var User = require('../api/user/user.model');
+var Country = require('../api/country/country.model');
+
 
 
 User.find({}).remove(function() {
@@ -22,6 +24,19 @@ User.find({}).remove(function() {
     password: 'admin'
   }, function() {
       console.log('finished populating users');
+    }
+  );
+});
+
+Country.find({}).remove(function() {
+  Country.create({
+    countryCode: 'count1',
+    countryName: 'Country 1'
+  }, {
+    countryCode: 'count2',
+    countryName: 'Country 2'
+  }, function() {
+      console.log('finished populating countries');
     }
   );
 });

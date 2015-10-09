@@ -11,6 +11,14 @@ var user = new User({
   password: 'password'
 });
 
+var adminuser = new User({
+  provider: 'local',
+  role: 'admin',
+  name: 'Fake Admin',
+  email: 'a@a.com',
+  password: 'admin'
+});
+
 describe('User Model', function() {
   before(function(done) {
     // Clear users before testing
@@ -19,16 +27,25 @@ describe('User Model', function() {
     });
   });
 
-  afterEach(function(done) {
-    User.remove().exec().then(function() {
-      done();
-    });
-  });
+  // afterEach(function(done) {
+  //   User.remove().exec().then(function() {
+  //     done();
+  //   });
+  // });
 
   it('should begin with no users', function(done) {
     User.find({}, function(err, users) {
       users.should.have.length(0);
       done();
+    });
+  });
+
+  it('should suceed when saving correct user', function(done){
+     adminuser.save(function() {
+      User.find({}, function(err, users) {
+        users.should.have.length(1);
+        done();
+      });
     });
   });
 

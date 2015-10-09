@@ -5,8 +5,7 @@ var mongoose = require('mongoose'),
 
 var CountrySchema = new Schema({
   countryCode: String,
-  countryName: String,
-  active: Boolean
+  countryName: String
 });
 
 module.exports = mongoose.model('Country', CountrySchema);
