@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 // Test specific configuration
 // ===========================
 module.exports = {
@@ -7,5 +9,7 @@ module.exports = {
   mongo: {
     uri: 'mongodb://localhost/pooky-test'
   },
-  seedDB: true
+  seedDB: true,
+
+  assetPath: path.normalize(__dirname + '/../../..') + '/client/assets'
 };
