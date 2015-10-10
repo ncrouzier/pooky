@@ -33,6 +33,7 @@
     "element": true,
     "by": true,
     "google":true,
-    "define":true
+    "define":true,
+    "EXIF":true
   }
 }
