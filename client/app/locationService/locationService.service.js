@@ -27,6 +27,9 @@ angular.module('pookyApp').factory('locationService', ['Restangular', function(R
     };
 
     factory.updateLocation = function(loc) {
+        if (loc._id === undefined){
+            Restangular.restangularizeElement('', loc, 'locations');
+        }
         loc.save();
     };
 

@@ -12,8 +12,6 @@ var LocationSchema = new Schema({
     lng: String,
     zoomLvl: Number,
     imgPath: String,
-    imgHeight: Number,
-    imgWidth: Number,
     country: String,
     createdAt: Date,
     updatedAt: Date
